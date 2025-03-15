@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -49,7 +50,7 @@ namespace GrafosT1M1
             Grafos.Add(new List<int>());
             for (int i = 0; i <= index; i++) Grafos[index].Add(0);
 
-            return false;
+            return true;
         }
 
         public bool RemoverVertice(int indice)
@@ -69,12 +70,43 @@ namespace GrafosT1M1
 
         void ImprimeGrafo() // Em processo
         { 
-            string espaco = " ";
-            for (int i = 0; i < Vertices.MaxBy(x => x.Length).Length; i++)
-                espaco += " ";
+            int maxS = Vertices.MaxBy(x => x.Length).Length + 2; 
             Console.Clear();
 
-            Console.Write(espaco);
+            for (int i = 0; i < maxS; i++)
+            {
+                Console.Write(" ");
+            }
+
+            for (int i = 0; i < Vertices.Count; i++)
+            {
+                Console.Write(Vertices[i]);
+                for (int j = 0; j < maxS - Vertices[i].Length; j++)
+                {
+                    Console.Write(" ");
+                }
+            }
+
+            for (int i = 0; i < Vertices.Count; i++)
+            {
+                Console.Write(Vertices[i]);
+                for (int k = 0; k < maxS - Vertices[i].Length; k++)
+                {
+                    Console.Write(" ");
+                }
+
+                for (int j = 0; j < Vertices.Count; j++)
+                {
+                    Console.Write(Grafos[i][j]);
+                    for (int k = 0; k < maxS - Grafos[i][j].ToString().Length; j++)
+                    {
+                        Console.Write(" ");
+                    }
+                }
+                Console.Write("\n");
+            }
+            
+
         }
         
     }
