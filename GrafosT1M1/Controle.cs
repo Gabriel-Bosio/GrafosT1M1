@@ -9,7 +9,7 @@ namespace GrafosT1M1
     internal class Controle
     {
         private GrafoMatriz grafoMatriz;
-        // Inserir grafo de lista aqui;
+        private GrafoLista grafoLista;
         
         public Controle() { }
 
@@ -24,7 +24,7 @@ namespace GrafosT1M1
             bool ponderado = Console.ReadLine().Equals("y") ? true : false;
 
             grafoMatriz = new GrafoMatriz(ponderado, direcionado);
-            // Construir grafo de lista aqui
+            grafoLista = new GrafoLista(ponderado, direcionado);
 
             Manipulacao();
         }
