@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -19,12 +20,12 @@ namespace GrafosT1M1
             set { _vertives = value; }
         }
 
-        private List<List<int>> _grafos;
+        private List<List<float>> _grafo;
 
-        public List<List<int>> Grafos
+        public List<List<float>> Grafo
         {
-            get { return _grafos; }
-            set { _grafos = value; }
+            get { return _grafo; }
+            set { _grafo = value; }
         }
 
         public GrafoMatriz(bool ponderado, bool direcionado) 
@@ -32,7 +33,7 @@ namespace GrafosT1M1
             this._ponderado = ponderado;
             this._direcionado = direcionado;
             _vertives = new List<string>();
-            _grafos = new List<List<int>>();
+            _grafo = new List<List<float>>();
         }
 
         public bool InserirVertice(string label)
@@ -46,9 +47,9 @@ namespace GrafosT1M1
 
             int index = Vertices.IndexOf(label);
 
-            Grafos.ForEach(x => x.Add(0));
-            Grafos.Add(new List<int>());
-            for (int i = 0; i <= index; i++) Grafos[index].Add(0);
+            Grafo.ForEach(x => x.Add(0));
+            Grafo.Add(new List<float>());
+            for (int i = 0; i <= index; i++) Grafo[index].Add(0);
 
             return true;
         }
@@ -57,8 +58,8 @@ namespace GrafosT1M1
         {
 
             Vertices.RemoveAt(indice);
-            Grafos.RemoveAt(indice);
-            Grafos.ForEach(x => x.RemoveAt(indice));
+            Grafo.RemoveAt(indice);
+            Grafo.ForEach(x => x.RemoveAt(indice));
 
             return true;
         }
@@ -70,44 +71,90 @@ namespace GrafosT1M1
 
         void ImprimeGrafo() // Em processo
         { 
+
+            // Define o espaçamento entre colunas
             int maxS = Vertices.MaxBy(x => x.Length).Length + 2; 
             Console.Clear();
 
-            for (int i = 0; i < maxS; i++)
+            // Gera primeira linha com labels
+            GeraEspaco(maxS);
+            for (int i = 0; i < Vertices.Count; i++)
+            {
+                Console.Write(Vertices[i]);
+                GeraEspaco(maxS - Vertices[i].Length);
+            }
+
+            for (int i = 0; i < Vertices.Count; i++)
+            {
+                Console.Write(Vertices[i]);
+                GeraEspaco(maxS - Vertices[i].Length);
+
+                // Imprime coluna
+                for (int j = 0; j < Vertices.Count; j++)
+                {
+                    Console.Write(Grafo[i][j]);
+                    GeraEspaco(maxS - Grafo[i][j].ToString().Length);
+                }
+                Console.Write("\n\n");
+            }
+
+            Console.Write("Precione Enter para continuar...");
+            Console.ReadLine();
+        }
+
+        private void GeraEspaco(int size)
+        {
+            for (int i = 0; i < size; i++)
             {
                 Console.Write(" ");
             }
 
-            for (int i = 0; i < Vertices.Count; i++)
-            {
-                Console.Write(Vertices[i]);
-                for (int j = 0; j < maxS - Vertices[i].Length; j++)
-                {
-                    Console.Write(" ");
-                }
-            }
-
-            for (int i = 0; i < Vertices.Count; i++)
-            {
-                Console.Write(Vertices[i]);
-                for (int k = 0; k < maxS - Vertices[i].Length; k++)
-                {
-                    Console.Write(" ");
-                }
-
-                for (int j = 0; j < Vertices.Count; j++)
-                {
-                    Console.Write(Grafos[i][j]);
-                    for (int k = 0; k < maxS - Grafos[i][j].ToString().Length; j++)
-                    {
-                        Console.Write(" ");
-                    }
-                }
-                Console.Write("\n");
-            }
-            
-
         }
-        
+
+        public bool InserirAresta(int origem, int destino, float peso = 1)
+        {
+            if (ExisteAresta(origem, destino) || peso < 1) return false;
+
+            float val = !_ponderado && peso != 1 ? 1 : peso;
+
+            Grafo[origem][destino] = val;
+
+            if (!_direcionado) Grafo[destino][origem] = val;
+
+            return true;
+        }
+
+        public bool RemoverAresta(int origem, int destino)
+        {
+            if (!ExisteAresta(origem, destino)) return false;
+
+            Grafo[origem][destino] = 0;
+
+            if (!_direcionado) Grafo[destino][origem] = 0;
+
+            return true;
+        }
+
+        public bool ExisteAresta(int origem, int destino)
+        {
+            return Grafo[origem][destino] == 0 ? false : true;
+        }
+
+        public float PesoAresta(int origem, int destino)
+        {
+            return Grafo[origem][destino];
+        }
+
+        public List<int> RetornarVizinhos(int vertice)
+        {
+            List<int> vizinhos = new List<int>();
+            for(int i = 0; i < Grafo[vertice].Count; i++)
+            {
+                if (Grafo[vertice][i] != 0) vizinhos.Add(i);
+            }
+
+            return vizinhos;
+        }
+
     }
 }
