@@ -11,8 +11,19 @@ namespace GrafosT1M1
     internal class GrafoMatriz
     {
         private bool _ponderado;
+        
+        public bool Ponderado
+        {
+            get { return _ponderado; }
+        }
+
         private bool _direcionado;
         private List<string> _vertives;
+
+        public bool Direcionado
+        {
+            get { return _ponderado; }
+        }
 
         public List<string> Vertices
         {
@@ -64,29 +75,31 @@ namespace GrafosT1M1
             return true;
         }
 
-        public string LabelVerice(int index)
+        public string LabelVertice(int index)
         {
             return Vertices[index];
         }
 
-        void ImprimeGrafo() // Em processo
+        public void ImprimeGrafo() // Em processo
         { 
 
             // Define o espaçamento entre colunas
-            int maxS = Vertices.MaxBy(x => x.Length).Length + 2; 
+            int maxS = Vertices.MaxBy(x => x.Length).Length + 6; 
             Console.Clear();
 
             // Gera primeira linha com labels
             GeraEspaco(maxS);
             for (int i = 0; i < Vertices.Count; i++)
             {
-                Console.Write(Vertices[i]);
+                Console.Write(i + " - " + Vertices[i]);
                 GeraEspaco(maxS - Vertices[i].Length);
             }
 
+            Console.Write("\n\n");
+
             for (int i = 0; i < Vertices.Count; i++)
             {
-                Console.Write(Vertices[i]);
+                Console.Write(i + " - " + Vertices[i]);
                 GeraEspaco(maxS - Vertices[i].Length);
 
                 // Imprime coluna
@@ -97,9 +110,6 @@ namespace GrafosT1M1
                 }
                 Console.Write("\n\n");
             }
-
-            Console.Write("Precione Enter para continuar...");
-            Console.ReadLine();
         }
 
         private void GeraEspaco(int size)
@@ -115,11 +125,11 @@ namespace GrafosT1M1
         {
             if (ExisteAresta(origem, destino) || peso < 1) return false;
 
-            float val = !_ponderado && peso != 1 ? 1 : peso;
+            float val = !Ponderado && peso != 1 ? 1 : peso;
 
             Grafo[origem][destino] = val;
 
-            if (!_direcionado) Grafo[destino][origem] = val;
+            if (!Direcionado) Grafo[destino][origem] = val;
 
             return true;
         }
@@ -130,7 +140,7 @@ namespace GrafosT1M1
 
             Grafo[origem][destino] = 0;
 
-            if (!_direcionado) Grafo[destino][origem] = 0;
+            if (!Direcionado) Grafo[destino][origem] = 0;
 
             return true;
         }
