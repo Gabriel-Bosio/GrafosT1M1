@@ -107,18 +107,14 @@ namespace GrafosT1M1
 
         private void ExibeLista()
         {
-            // Substituir lógica para o grafo de lista
-            if (grafoMatriz.Vertices.Count > 0)
+            if (grafoLista.Vertices.Count > 0)
             {
-                grafoMatriz.ImprimeGrafo();
+                grafoLista.ImprimeGrafo();
             }
             else
             {
-                Console.WriteLine("Grafo de matriz não possui vertices");
+                Console.WriteLine("Grafo de lista não possui vertices");
             }
-
-            Console.WriteLine("\nPrecione Enter...");
-            Console.ReadLine();
         }
 
         private void AdicionarVertice()
@@ -130,7 +126,10 @@ namespace GrafosT1M1
                 Console.WriteLine("\nVerice inserida na matriz!");
             }
 
-            //Adicionar mesmo if para grafo de lista
+            if (grafoLista.InserirVertice(label))
+            {
+                Console.WriteLine("\nVertice inserida na lista!");
+            }
 
             Console.WriteLine("\nPrecione Enter...");
             Console.ReadLine();
@@ -145,7 +144,10 @@ namespace GrafosT1M1
                 Console.WriteLine("\nVertice removida na matriz!");
             }
 
-            //Adicionar mesmo if para grafo de lista
+            if (grafoLista.RemoverVertice(indice))
+            {
+                Console.WriteLine("\nVertice removida na lista!");
+            }
 
             Console.WriteLine("\nPrecione Enter...");
             Console.ReadLine();
@@ -158,7 +160,7 @@ namespace GrafosT1M1
 
             Console.WriteLine($"\n Vertice {indice} da matriz: {grafoMatriz.LabelVertice(indice)}");
 
-            //Adicionar mesmo para grafo de lista
+            Console.WriteLine($"\nVertice {indice} da lista: {grafoLista.LabelVertice(indice)}");
 
             Console.WriteLine("\nPrecione Enter...");
             Console.ReadLine();
@@ -185,7 +187,10 @@ namespace GrafosT1M1
                 Console.WriteLine($"\nInserida Aresta de {grafoMatriz.LabelVertice(indiceO)} para {grafoMatriz.LabelVertice(indiceD)} na matriz!");
             }
 
-            //Adicionar mesmo if para grafo de lista
+            if (grafoLista.InserirAresta(indiceO, indiceD, peso))
+            {
+                Console.WriteLine($"\nInserida Aresta de {grafoLista.LabelVertice(indiceO)} para {grafoLista.LabelVertice(indiceD)} na lista!");
+            }
 
             Console.WriteLine("\nPrecione Enter...");
             Console.ReadLine();
@@ -205,8 +210,10 @@ namespace GrafosT1M1
                 Console.WriteLine($"\nRemovida Aresta de {grafoMatriz.LabelVertice(indiceO)} para {grafoMatriz.LabelVertice(indiceD)} na matriz!");
             }
 
-
-            //Adicionar mesmo if para grafo de lista
+            if (grafoLista.RemoverAresta(indiceO, indiceD))
+            {
+                Console.WriteLine($"\nRemovida Aresta de {grafoLista.LabelVertice(indiceO)} para {grafoLista.LabelVertice(indiceD)} na lista!");
+            }
 
             Console.WriteLine("\nPrecione Enter...");
             Console.ReadLine();
@@ -230,8 +237,14 @@ namespace GrafosT1M1
                 Console.WriteLine($"\nAresta de {grafoMatriz.LabelVertice(indiceO)} para {grafoMatriz.LabelVertice(indiceD)} não existe na matriz!");
             }
 
-
-            //Adicionar mesmo if para grafo de lista
+            if (grafoLista.ExisteAresta(indiceO, indiceD))
+            {
+                Console.WriteLine($"\nAresta de {grafoLista.LabelVertice(indiceO)} para {grafoLista.LabelVertice(indiceD)} possui o valor {grafoLista.PesoAresta(indiceO, indiceD)} na lista!");
+            }
+            else
+            {
+                Console.WriteLine($"\nAresta de {grafoLista.LabelVertice(indiceO)} para {grafoLista.LabelVertice(indiceD)} não existe na lista!");
+            }
 
             Console.WriteLine("\nPrecione Enter...");
             Console.ReadLine();
@@ -242,18 +255,27 @@ namespace GrafosT1M1
             Console.WriteLine("Informe o indice do vertice: ");
             int indice = Convert.ToInt32(Console.ReadLine());
 
-            List<int> vizinhos = grafoMatriz.RetornarVizinhos(indice);
-            if (vizinhos.Count > 0)
+            List<int> vizinhosMatriz = grafoMatriz.RetornarVizinhos(indice);
+            if (vizinhosMatriz.Count > 0)
             {
                 Console.WriteLine($"\nVizinhos de {grafoMatriz.LabelVertice(indice)} na matriz:\n");
-                vizinhos.ForEach(x => Console.Write($"{grafoMatriz.LabelVertice(x)}  "));
+                vizinhosMatriz.ForEach(x => Console.Write($"{grafoMatriz.LabelVertice(x)}  "));
             }
             else
             {
                 Console.WriteLine($"\nVertice {grafoMatriz.LabelVertice(indice)} não possui vizinhos na matriz!\n");
             }
 
-            //Adicionar mesmo if para grafo de lista
+            List<int> vizinhosLista = grafoLista.RetornarVizinhos(indice);
+            if (vizinhosLista.Count > 0)
+            {
+                Console.WriteLine($"\nVizinhos de {grafoLista.LabelVertice(indice)} na lista:\n");
+                vizinhosLista.ForEach(x => Console.Write($"{grafoLista.LabelVertice(x)}  "));
+            }
+            else
+            {
+                Console.WriteLine($"\nVertice {grafoLista.LabelVertice(indice)} não possui vizinhos na lista!\n");
+            }
 
             Console.WriteLine("\nPrecione Enter...");
             Console.ReadLine();

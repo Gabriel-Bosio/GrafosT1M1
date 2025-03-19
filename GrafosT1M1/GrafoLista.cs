@@ -100,13 +100,14 @@ namespace GrafosT1M1
 
         public bool InserirAresta(int origem, int destino, float peso = 1)
         {
-            if (ExisteAresta(origem, destino) return false;
+            if (ExisteAresta(origem, destino)) return false;
 
             float val = !_ponderado && peso != 1 ? 1 : peso;
 
             Grafo[origem].Add((destino, val));
 
-            if (!_direcionado)
+            // Se for um self-loop, não insere a aresta novamente
+            if (!_direcionado && origem != destino)
             {
                 Grafo[destino].Add((origem, val));
             }
