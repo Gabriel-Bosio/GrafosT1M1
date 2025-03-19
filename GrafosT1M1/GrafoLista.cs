@@ -93,9 +93,6 @@ namespace GrafosT1M1
                 }
                 Console.WriteLine();
             }
-
-            Console.Write("Pressione Enter para continuar...");
-            Console.ReadLine();
         }
 
         public bool InserirAresta(int origem, int destino, float peso = 1)

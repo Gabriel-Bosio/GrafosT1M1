@@ -92,7 +92,7 @@ namespace GrafosT1M1
             for (int i = 0; i < Vertices.Count; i++)
             {
                 Console.Write(i + " - " + Vertices[i]);
-                GeraEspaco(maxS - Vertices[i].Length);
+                GeraEspaco(maxS - Vertices[i].Length - 4);
             }
 
             Console.Write("\n\n");
@@ -100,7 +100,7 @@ namespace GrafosT1M1
             for (int i = 0; i < Vertices.Count; i++)
             {
                 Console.Write(i + " - " + Vertices[i]);
-                GeraEspaco(maxS - Vertices[i].Length);
+                GeraEspaco(maxS - Vertices[i].Length - 4);
 
                 // Imprime coluna
                 for (int j = 0; j < Vertices.Count; j++)

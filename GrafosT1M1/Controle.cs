@@ -36,57 +36,61 @@ namespace GrafosT1M1
 
             while (!sair)
             {
-                Console.Clear();
-                Console.WriteLine("Opcoes:\n");
-                Console.WriteLine("1 - Exibir Grafo em Matriz");
-                Console.WriteLine("2 - Exibir Grafo em Lista");
-                Console.WriteLine("3 - Inserir Vertice");
-                Console.WriteLine("4 - Remover Vertice");
-                Console.WriteLine("5 - Exibir Label com base no indice");
-                Console.WriteLine("6 - Inserir aresta");
-                Console.WriteLine("7 - Remover aresta");
-                Console.WriteLine("8 - Verificar aresta");
-                Console.WriteLine("9 - Lista vizinhos");
-                Console.WriteLine("0 - Sair\n");
-                Console.WriteLine("-");
-
-                escolha = Convert.ToInt32(Console.ReadLine());
-                Console.WriteLine("\n\n");
-
-                switch (escolha)
+                try
                 {
-                    case 0:
-                        Console.WriteLine("Saindo ...");
-                        sair = true;
-                        break;
-                    case 1:
-                        ExibeMatriz();
-                        break;
-                    case 2:
-                        ExibeLista();
-                        break;
-                    case 3:
-                        AdicionarVertice();
-                        break;
-                    case 4:
-                        RemoverVertice();
-                        break;
-                    case 5:
-                        ExibirLabel();
-                        break;
-                    case 6:
-                        AdicionarAresta();
-                        break;
-                    case 7:
-                        RemoverAresta();
-                        break;
-                    case 8:
-                        VerificarAresta();
-                        break;
-                    case 9:
-                        ExibirVizinhos();
-                        break;
+                    Console.Clear();
+                    Console.WriteLine("Opcoes:\n");
+                    Console.WriteLine("1 - Exibir Grafo em Matriz");
+                    Console.WriteLine("2 - Exibir Grafo em Lista");
+                    Console.WriteLine("3 - Inserir Vertice");
+                    Console.WriteLine("4 - Remover Vertice");
+                    Console.WriteLine("5 - Exibir Label com base no indice");
+                    Console.WriteLine("6 - Inserir aresta");
+                    Console.WriteLine("7 - Remover aresta");
+                    Console.WriteLine("8 - Verificar aresta");
+                    Console.WriteLine("9 - Lista vizinhos");
+                    Console.WriteLine("0 - Sair\n");
+                    Console.WriteLine("-");
+
+                    escolha = Convert.ToInt32(Console.ReadLine());
+                    Console.WriteLine("\n\n");
+
+                    switch (escolha)
+                    {
+                        case 0:
+                            Console.WriteLine("Saindo ...");
+                            sair = true;
+                            break;
+                        case 1:
+                            ExibeMatriz();
+                            break;
+                        case 2:
+                            ExibeLista();
+                            break;
+                        case 3:
+                            AdicionarVertice();
+                            break;
+                        case 4:
+                            RemoverVertice();
+                            break;
+                        case 5:
+                            ExibirLabel();
+                            break;
+                        case 6:
+                            AdicionarAresta();
+                            break;
+                        case 7:
+                            RemoverAresta();
+                            break;
+                        case 8:
+                            VerificarAresta();
+                            break;
+                        case 9:
+                            ExibirVizinhos();
+                            break;
+                    }
                 }
+                catch { }
             }
         }
 
@@ -115,6 +119,8 @@ namespace GrafosT1M1
             {
                 Console.WriteLine("Grafo de lista não possui vertices");
             }
+            Console.WriteLine("\nPrecione Enter...");
+            Console.ReadLine();
         }
 
         private void AdicionarVertice()
@@ -123,13 +129,15 @@ namespace GrafosT1M1
             string label = Console.ReadLine();
             if (grafoMatriz.InserirVertice(label))
             {
-                Console.WriteLine("\nVerice inserida na matriz!");
+                Console.WriteLine("\nVertice inserida na matriz!");
             }
+            else { Console.WriteLine("\nVertice com este nome já existe na matriz!"); }
 
             if (grafoLista.InserirVertice(label))
             {
                 Console.WriteLine("\nVertice inserida na lista!");
             }
+            else { Console.WriteLine("\nVertice com este nome já existe na lista!"); }
 
             Console.WriteLine("\nPrecione Enter...");
             Console.ReadLine();
@@ -139,15 +147,17 @@ namespace GrafosT1M1
         {
             Console.WriteLine("Informe o indice do vertice: ");
             int indice = Convert.ToInt32(Console.ReadLine());
-            if (grafoMatriz.RemoverVertice(indice))
+            if (indice < grafoMatriz.Vertices.Count && indice >= 0 && grafoMatriz.RemoverVertice(indice))
             {
                 Console.WriteLine("\nVertice removida na matriz!");
             }
+            else { Console.WriteLine("\nIndice mencionado não existe na matriz!"); }
 
-            if (grafoLista.RemoverVertice(indice))
+            if (indice < grafoLista.Vertices.Count && indice >= 0 && grafoLista.RemoverVertice(indice))
             {
                 Console.WriteLine("\nVertice removida na lista!");
             }
+            else { Console.WriteLine("\nIndice mencionado não existe na lista!"); }
 
             Console.WriteLine("\nPrecione Enter...");
             Console.ReadLine();
@@ -158,7 +168,7 @@ namespace GrafosT1M1
             Console.WriteLine("Informe o indice do vertice: ");
             int indice = Convert.ToInt32(Console.ReadLine());
 
-            Console.WriteLine($"\n Vertice {indice} da matriz: {grafoMatriz.LabelVertice(indice)}");
+            Console.WriteLine($"\nVertice {indice} da matriz: {grafoMatriz.LabelVertice(indice)}");
 
             Console.WriteLine($"\nVertice {indice} da lista: {grafoLista.LabelVertice(indice)}");
 
@@ -265,6 +275,8 @@ namespace GrafosT1M1
             {
                 Console.WriteLine($"\nVertice {grafoMatriz.LabelVertice(indice)} não possui vizinhos na matriz!\n");
             }
+
+            Console.WriteLine("\n\n");
 
             List<int> vizinhosLista = grafoLista.RetornarVizinhos(indice);
             if (vizinhosLista.Count > 0)
